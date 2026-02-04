@@ -22,4 +22,12 @@ for (i = 0; i < n; i++) {
     }
 }
 if (foundIndex != -1) {
-  printf("Found at index 
+  printf("Found at index %d\n", foundIndex);
+} else {
+  printf("Not Found\n");
+}
+
+printf("Comparisons = %d\n", comparisons);
+
+return 0;
+}
