@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
+
+int sum(int arr[], int n) {
+    int s = 0;
+    for(int i = 0; i < n; i++)
+        s += arr[i];
+    return s;
+}
+
+int canPaint(int boards[], int n, int k, int maxTime) {
+    int painters = 1;
+    int curr = 0;
+
+    for(int i = 0; i < n; i++) {
+        if(boards[i] > maxTime)
+            return 0;
+
+        if(curr + boards[i] <= maxTime) {
+            curr += boards[i];
+        } else {
+            painters++;
+            curr = boards[i];
+        }
+    }
+
+    return painters <= k;
+}
+
+int painterPartition(int boards[], int n, int k) {
+    int low = 0;
+    int high = sum(boards, n);
+    int ans = high;
+
+    while(low <= high) {
+        int mid = (low + high) / 2;
+
+        if(canPaint(boards, n, k, mid)) {
+            ans = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int boards[n];
+
+    for(int i = 0; i < n; i++)
+        scanf("%d", &boards[i]);
+
+    printf("%d", painterPartition(boards, n, k));
+
+    return 0;
+}
